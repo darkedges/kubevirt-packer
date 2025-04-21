@@ -1,0 +1,46 @@
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  creationTimestamp: 2018-07-04T15:03:08Z
+  generation: 1
+  labels:
+    kubevirt.io/os: windows
+  name: win2022-vm
+spec:
+  running: true
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        kubevirt.io/domain: win2022-vm
+    spec:
+      domain:
+        cpu:
+          cores: 2
+        resources:
+          requests:
+            memory: 4096M
+        firmware:
+          uuid: 5d307ca9-b3ef-428c-8861-06e72d69f223
+        devices:
+          disks:
+            - disk:
+                bus: sata
+              name: disk0
+          interfaces:
+            - name: default
+              masquerade: {}
+            - name: bridge-net
+              bridge: {}
+        machine:
+          type: q35
+      networks:
+        - name: default
+          pod: {} # Stock pod network
+        - name: bridge-net
+          multus: # Secondary multus network
+            networkName: linux-bridge-net-ipam #ref to NAD name
+      volumes:
+        - name: disk0
+          persistentVolumeClaim:
+            claimName: kubevirt-win2022

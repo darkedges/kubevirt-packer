@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cloudflare
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: cloudflared
+  name: cloudflared
+  namespace: cloudflare
+spec:
+  selector:
+    matchLabels:
+      app: cloudflared
+  template:
+    metadata:
+      labels:
+        app: cloudflared
+    spec:
+      containers:
+        - name: cloudflared
+          image: cloudflare/cloudflared:latest
+          imagePullPolicy: Always
+          args:
+            [
+              "tunnel",
+              "--no-autoupdate",
+              "run",
+              "--token",
+              "eyJhIjoiNGFlMmI0N2FiODkxNThmYjViNjVkYjRlZDU1ODg4MzAiLCJ0IjoiMWRhNWEyODktNjRmYS00MmU5LWFjMjItYzVlODI4ZGU2N2ZmIiwicyI6Ik1HRXlPVE16Tm1NdE56Vm1PQzAwT1RnNExUZzNaVEl0WXpka016VTVNR1UwWWpndyJ9",
+            ]
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 60
