@@ -30,16 +30,11 @@ spec:
           interfaces:
             - name: default
               masquerade: {}
-            - name: bridge-net
-              bridge: {}
         machine:
           type: q35
       networks:
         - name: default
           pod: {} # Stock pod network
-        - name: bridge-net
-          multus: # Secondary multus network
-            networkName: linux-bridge-net-ipam #ref to NAD name
       volumes:
         - name: disk0
           persistentVolumeClaim:

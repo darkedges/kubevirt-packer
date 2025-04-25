@@ -47,9 +47,11 @@ kubectl create -f https://github.com/kubevirt/containerized-data-importer/releas
 kubectl create namespace windows2022
 kubens windows2022
 kubectl apply  -f kubevirt_win2022_dv.yml
-kubectl apply  -f kubevirt_win2022_pvc.yml
-kubectl apply  -f kubevirt_win2022_vm.yml
-kubectl apply  -f kubevirt_win2022_svc.yml
+kubectl apply  -f kubevirt_win2022_ad_pvc.yml
+kubectl apply  -f kubevirt_win2022_ad_vm.yml
+kubectl apply  -f kubevirt_win2022_ad_svc.yml
+
+kubectl port-forward svc/win2022-vm-nodeport 27017:27017
 
 virtctl vnc win2022-vm
 ```

@@ -14,4 +14,4 @@ spec:
         storage: 52Gi
   source:
     http:
-      url: "http://10.0.0.35:8080/windows-2022.qcow2"
+      url: "http://10.0.0.35:18080/windows-2022.qcow2"
